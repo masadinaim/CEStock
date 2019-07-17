@@ -20,11 +20,13 @@ class U_Model extends CI_Model {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-	function ambil_data(){
+	function ambil_data()
+	{
 		$data = $this->db->query("SELECT * from user");
 		return $data->result();
 	}
-	function get_data($id){
+	function get_data($id)
+	{
 		$data = $this->db->query("SELECT * from user where id=$id");
 		return $data->result();
 	}
@@ -56,5 +58,32 @@ class U_Model extends CI_Model {
 	   	}else{
 	   		return false;
 	   	}
+	}
+	public function insertpost($data)
+	{
+		$this->db->insert('post', $data);
+	}
+	public function get_post($id)
+	{
+		$this->db->select('*');
+		$this->db->from('post');
+		$this->db->join('user', 'post.id_user = user.id' );
+		$this->db->where('post.id_user', $this->session->userdata('id'));
+		$data = $this->db->get();
+		
+		return $data->result();
+	}
+	public function insertcomment($data)
+	{
+		$this->db->insert('comment', $data);
+	}
+	public function get_comment($id)
+	{
+		$this->db->select('*');
+		$this->db->from('comment');
+		$this->db->join('user', 'comment.id_user = user.id');
+		$data = $this->db->get();
+		
+		return $data->result();
 	}
 }

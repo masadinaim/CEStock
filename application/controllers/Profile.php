@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Profile extends CI_Controller {
 	function __construct(){
 		parent::__construct();		
 		$this->load->model('U_Model');
@@ -22,23 +22,13 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
-	{
-		$this->load->view('profileakun');
-	}
-	public function profile()
-	{
-		$this->load->view('profile');
-	}
-	public function setting()
-	{
-		$this->load->view('settingprofile');
-	}
 	public function getuserdata($id)
-	{
-		
+	{	
 		$data['user'] = $this->U_Model->get_data($id);
+		$this->load->view('templates/profile_header.php');
+		$this->load->view('templates/profile_sidebar.php');
 		$this->load->view('settingprofile',$data);
+		$this->load->view('templates/profile_footer.php');
 	}
 	public function saveuserdata()
 	{
@@ -71,13 +61,18 @@ class Welcome extends CI_Controller {
      );
 
      $this->U_Model->save_data($where,$data,'user');
-     redirect('Welcome/tampiluserdata');
+     redirect('profile/showuserdata');
 	}
-	public function tampiluserdata()
+	public function showuserdata()
 	{
 		$id = $this->session->userdata('id');
 		$data['user'] = $this->U_Model->get_data($id);
-		$this->load->view('profile',$data);
+		$data['post'] = $this->U_Model->get_post($id);
+		$data['comment'] = $this->U_Model->get_comment($id);
+		$this->load->view('templates/profile_header.php');
+		$this->load->view('templates/profile_sidebar.php');
+		$this->load->view('myprofile',$data);
+		$this->load->view('templates/profile_footer.php');
 	}
 	public function uploadgambar()
 	{
@@ -100,7 +95,7 @@ class Welcome extends CI_Controller {
 			     	'id' => $id
 			     );
 		       $this->U_Model->save_gambar($where,$data,'user');
-		     	redirect('welcome/tampiluserdata');
+		     	redirect('profile/showuserdata');
 		    }else{
 		      echo "string";
 		     
@@ -118,7 +113,10 @@ class Welcome extends CI_Controller {
 
 		    if($this->form_validation->run() == FALSE)
 			{
-			   	echo "string";
+				$this->session->set_flashdata('type','change_password');
+			   	$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert"> 
+				Cek Kembali Password Anda</div>');
+				redirect('profile/getuserdata/'.$id);
 			}
 			else{
 				
@@ -126,14 +124,28 @@ class Welcome extends CI_Controller {
 				if($cek_old == false){
 			   	
 			   
-			   		echo "string1";
+			   		$this->session->set_flashdata('type','change_password');
+				   	$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert"> 
+					Password Lama Anda Salah</div>');
+					redirect('profile/getuserdata/'.$id);
 			    
 				}
 				else{
-				    echo "string2";
+				   $newpassword = $this->input->post('new');
+
+				   $data = array(
+     				'password'=>password_hash($newpassword, PASSWORD_DEFAULT)
+     				);
+				   $where = array(
+				     	'id' => $id
+				     );
+
+				    $this->U_Model->save_data($where,$data,'user');
+				    $this->session->set_flashdata('type','change_password');
+				   	$this->session->set_flashdata('message','<div class="alert alert-success" role="alert"> 
+					Password Anda Berhasil Diubah</div>');
+					redirect('profile/getuserdata/'.$id);
 			   	}//end if valid_user
 			}
-			
-		
 	}
 }

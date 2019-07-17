@@ -21,12 +21,8 @@ class Auth extends CI_Controller {
 		else{
 			//validasinya sukses
 			$this->_login();
-
-
 		}
-		
 	}
-
 	private function _login()
 	{
 		$email = $this->input->post('email');
@@ -55,7 +51,7 @@ class Auth extends CI_Controller {
 					}elseif ($user['role_id']==3) {
 						redirect('premium');
 					}else{
-						redirect('welcome/tampiluserdata');
+						redirect('profile/showuserdata');
 					}
 					
 				}
@@ -81,9 +77,7 @@ class Auth extends CI_Controller {
 			redirect('auth');
 
 		}
-
 	}
-
 	public function registration()
 	{
 		$this->form_validation->set_rules('name', 'Name', 'required|trim');
@@ -141,7 +135,6 @@ class Auth extends CI_Controller {
 			redirect('auth');
 		}
 	} 
-
 	private function _sendEmail($token, $type)
 	{
 		$config =[
@@ -176,7 +169,6 @@ class Auth extends CI_Controller {
 			die;
 		}
 	}
-
 	public function verify()
 	{
 		$email = $this->input->get('email');
@@ -218,15 +210,9 @@ class Auth extends CI_Controller {
 
 		} else {
 			$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert"> Account activation failed! Wrong email! </div>');
-			redirect('auth');
-			
+			redirect('auth');	
 		}
-
-
-
 	}
-
-
 	public function logout()
 	{
 		$this->session->unset_userdata('email');
@@ -234,8 +220,8 @@ class Auth extends CI_Controller {
 		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert"> You have been logged out </div>');
 		redirect('auth');
 	}
-
-	public function forgotPassword(){
+	public function forgotPassword()
+	{
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 
 		if($this->form_validation->run() == false){
@@ -266,14 +252,11 @@ class Auth extends CI_Controller {
 			} else {
 				$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert"> Email is not registered or activated!</div>');
 				redirect('auth/forgotpassword');
-
 			}
-
 		}
-
 	}
-
-	public function resetPassword(){
+	public function resetPassword()
+	{
 		$email = $this->input->get('email');
 		$token = $this->input->get('token');
 
@@ -294,12 +277,10 @@ class Auth extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert"> Reset password failed! Wrong email</div>');
 			redirect('auth');
-
 		}
-
 	}
-
-	public function changePassword(){
+	public function changePassword()
+	{
 
 		if(!$this->session->userdata('reset_email')){
 			redirect('auth');
