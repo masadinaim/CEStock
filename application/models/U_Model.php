@@ -25,6 +25,34 @@ class U_Model extends CI_Model {
 		$data = $this->db->query("SELECT * from user");
 		return $data->result();
 	}
+	function ambil_data_member()
+	{
+		$id = $this->session->userdata('id');
+		$data = $this->db->query("SELECT * from user where role_id in (3,4) and id != $id");
+		return $data->result();
+	}
+	function follow($data)
+	{
+		$this->db->insert('follow', $data);
+	}
+	function unfollow($data)
+	{
+		$this->db->where($data);
+		$this->db->delete('follow');
+
+	}
+	function jumlah_follower($id){
+		$data = $this->db->query("select count(*) as cok from follow where id_followed = $id");
+		return $data->row()->cok;
+	}
+	function jumlah_following($id){
+		$data = $this->db->query("select count(*) as cok from follow where id_follow = $id");
+		return $data->row()->cok;
+	}
+	function get_follow($followed,$follow){
+		$data = $this->db->query("select count(*) as cok from follow where id_followed = $followed and id_follow = $follow");
+		return $data->row()->cok;
+	}
 	function get_data($id)
 	{
 		$data = $this->db->query("SELECT * from user where id=$id");
@@ -67,6 +95,7 @@ class U_Model extends CI_Model {
 	{
 		$this->db->select('*');
 		$this->db->from('post');
+		$this->db->order_by('id_post', 'DESC');
 		$this->db->join('user', 'post.id_user = user.id' );
 		$this->db->where('post.id_user', $this->session->userdata('id'));
 		$data = $this->db->get();

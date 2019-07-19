@@ -27,11 +27,20 @@
         <li class="header">MAIN NAVIGATION</li>
         <li>
           <a href="<?php echo base_url(); ?>profile/showuserdata">
-            <i class="fa fa-th"></i> <span>Widgets</span>
+            <i class="fa fa-th"></i> <span>My Profile</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green">Hot</small>
             </span>
           </a>
+        </li>
+        <li>
+          <a href="<?php echo base_url(); ?>profile/showprofile">
+            <i class="fa fa-th"></i> <span>Profile User</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green">Hot</small>
+            </span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

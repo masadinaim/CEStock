@@ -148,4 +148,32 @@ class Profile extends CI_Controller {
 			   	}//end if valid_user
 			}
 	}
+	public function showprofile()
+	{
+		$data['profile'] = $this->U_Model->ambil_data_member();
+		$this->load->view('templates/profile_header.php');
+		$this->load->view('templates/profile_sidebar.php');
+		$this->load->view('profile',$data);
+		$this->load->view('templates/profile_footer.php');
+	}
+	public function follow($id)
+	{
+		$data = [
+			'id_followed'=>$id,
+			'id_follow'=>$this->session->userdata('id')
+		];
+		$this->U_Model->follow($data);
+
+		redirect('profile/showprofile/');
+	}
+	public function unfollow($id)
+	{
+		$data = [
+			'id_followed'=> $id,
+			'id_follow'=> $this->session->userdata('id')
+		];
+		$this->U_Model->unfollow($data);
+
+		redirect('profile/showprofile/');
+	}
 }
