@@ -24,10 +24,10 @@ class Post extends CI_Controller {
 	 */
 public function post()
 	{
-		$this->load->view('templates/profile_header.php');
-		$this->load->view('templates/profile_sidebar.php');
+		$this->load->view('layout/header');
+		$this->load->view('layout/sidebar');
 		$this->load->view('post');
-		$this->load->view('templates/profile_footer.php');
+		$this->load->view('layout/footer');
 	}
 	public function newpost()
 	{

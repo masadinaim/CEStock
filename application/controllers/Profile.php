@@ -25,10 +25,10 @@ class Profile extends CI_Controller {
 	public function getuserdata($id)
 	{	
 		$data['user'] = $this->U_Model->get_data($id);
-		$this->load->view('templates/profile_header.php');
-		$this->load->view('templates/profile_sidebar.php');
+		$this->load->view('layout/header');
+		$this->load->view('layout/sidebar');
 		$this->load->view('settingprofile',$data);
-		$this->load->view('templates/profile_footer.php');
+		$this->load->view('layout/footer');
 	}
 	public function saveuserdata()
 	{
@@ -68,11 +68,13 @@ class Profile extends CI_Controller {
 		$id = $this->session->userdata('id');
 		$data['user'] = $this->U_Model->get_data($id);
 		$data['post'] = $this->U_Model->get_post($id);
-		$data['comment'] = $this->U_Model->get_comment($id);
-		$this->load->view('templates/profile_header.php');
-		$this->load->view('templates/profile_sidebar.php');
+		$data['comment'] = $this->U_Model->get_comment();
+		$this->load->view('layout/header');
+		$this->load->view('layout/sidebar');
 		$this->load->view('myprofile',$data);
-		$this->load->view('templates/profile_footer.php');
+		$this->load->view('layout/footer');
+		
+
 	}
 	public function uploadgambar()
 	{
@@ -151,10 +153,10 @@ class Profile extends CI_Controller {
 	public function showprofile()
 	{
 		$data['profile'] = $this->U_Model->ambil_data_member();
-		$this->load->view('templates/profile_header.php');
-		$this->load->view('templates/profile_sidebar.php');
+		$this->load->view('layout/header');
+		$this->load->view('layout/sidebar');
 		$this->load->view('profile',$data);
-		$this->load->view('templates/profile_footer.php');
+		$this->load->view('layout/footer');
 	}
 	public function follow($id)
 	{

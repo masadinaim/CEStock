@@ -58,6 +58,11 @@ class U_Model extends CI_Model {
 		$data = $this->db->query("SELECT * from user where id=$id");
 		return $data->result();
 	}
+	function get_photo($id)
+	{
+		$data = $this->db->query("SELECT * from user where id=$id");
+		return $data->row()->image;
+	}
 	public function save_data($iduser,$data,$table)
     {       
         $this->db->where($iduser);
@@ -93,12 +98,21 @@ class U_Model extends CI_Model {
 	}
 	public function get_post($id)
 	{
-		$this->db->select('*');
-		$this->db->from('post');
-		$this->db->order_by('id_post', 'DESC');
-		$this->db->join('user', 'post.id_user = user.id' );
-		$this->db->where('post.id_user', $this->session->userdata('id'));
-		$data = $this->db->get();
+		if($id != null){
+			$this->db->select('*');
+			$this->db->from('post');
+			$this->db->order_by('id_post', 'DESC');
+			$this->db->join('user', 'post.id_user = user.id' );
+			$this->db->where('post.id_user', $this->session->userdata('id'));
+			$data = $this->db->get();
+		}else{
+			$this->db->select('*');
+			$this->db->from('post');
+			$this->db->order_by('id_post', 'DESC');
+			$this->db->join('user', 'post.id_user = user.id' );
+			$data = $this->db->get();
+		}
+		
 		
 		return $data->result();
 	}
@@ -106,7 +120,7 @@ class U_Model extends CI_Model {
 	{
 		$this->db->insert('comment', $data);
 	}
-	public function get_comment($id)
+	public function get_comment()
 	{
 		$this->db->select('*');
 		$this->db->from('comment');

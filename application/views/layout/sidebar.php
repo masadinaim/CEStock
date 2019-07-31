@@ -4,7 +4,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url();?>assets/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="<?php echo base_url(); ?>assets/images/profile/<?php echo photo_user($this->session->userdata('id')); ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
@@ -26,19 +26,38 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li>
-          <a href="<?php echo base_url(); ?>profile/showuserdata">
-            <i class="fa fa-th"></i> <span>My Profile</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">Hot</small>
-            </span>
+          <a href="<?php echo base_url('home'); ?>">
+            <i class="fa fa-home"></i> <span>Home</span>
           </a>
         </li>
         <li>
-          <a href="<?php echo base_url(); ?>profile/showprofile">
-            <i class="fa fa-th"></i> <span>Profile User</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">Hot</small>
-            </span>
+          <a href="<?php echo base_url('user_profile'); ?>">
+            <i class="fa fa-user"></i> <span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="pages/widgets.html">
+            <i class="fa fa-eye"></i> <span>Watchlist</span>
+          </a>
+        </li>
+        <li>
+          <a href="pages/widgets.html">
+            <i class="fa fa-comment"></i> <span>Chat</span>
+          </a>
+        </li>
+        <li>
+          <a href="pages/widgets.html">
+            <i class="fa fa-line-chart"></i> <span>CePredict</span>
+          </a>
+        </li>
+        <li>
+          <a href="pages/widgets.html">
+            <i class="fa fa-list-alt"></i> <span>Stocklist</span>
+          </a>
+        </li>
+        <li>
+          <a href="pages/widgets.html">
+            <i class="fa fa-font-awesome"></i> <span>Sector</span>
           </a>
         </li>
       </ul>

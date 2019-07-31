@@ -40,7 +40,8 @@ class Auth extends CI_Controller {
 					$data = [
 						'email' => $user['email'],
 						'role_id' => $user['role_id'],
-						'id'=> $user['id']
+						'id'=> $user['id'],
+						'username'=>$user['username']
 					];
 					$this->session->set_userdata($data);
 
@@ -51,7 +52,7 @@ class Auth extends CI_Controller {
 					}elseif ($user['role_id']==3) {
 						redirect('premium');
 					}else{
-						redirect('profile/showuserdata');
+						redirect('home');
 					}
 					
 				}
